@@ -14,7 +14,6 @@ import { SecretProvider } from "./secret-provider";
 
 const awsSdkOptions = getOptions();
 const s3Client = new S3(awsSdkOptions);
-const rekognitionClient = new Rekognition(awsSdkOptions);
 const secretsManagerClient = new SecretsManager(awsSdkOptions);
 const secretProvider = new SecretProvider(secretsManagerClient);
 
@@ -27,7 +26,7 @@ export async function handler(event: ImageHandlerEvent): Promise<ImageHandlerExe
   console.info("Received event:", JSON.stringify(event, null, 2));
 
   const imageRequest = new ImageRequest(s3Client, secretProvider);
-  const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+  const imageHandler = new ImageHandler(s3Client);
   const isAlb = event.requestContext && Object.prototype.hasOwnProperty.call(event.requestContext, "elb");
 
   try {

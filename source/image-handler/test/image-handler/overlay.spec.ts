@@ -3,7 +3,6 @@
 
 import { mockAwsS3 } from "../mock";
 
-import Rekognition from "aws-sdk/clients/rekognition";
 import S3 from "aws-sdk/clients/s3";
 import fs from "fs";
 import sharp from "sharp";
@@ -12,7 +11,6 @@ import { ImageHandler } from "../../image-handler";
 import { ImageEdits, ImageHandlerError, StatusCodes, ImageRequestInfo, RequestTypes } from "../../lib";
 
 const s3Client = new S3();
-const rekognitionClient = new Rekognition();
 
 describe("overlay", () => {
   beforeEach(() => {
@@ -47,7 +45,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const result = await imageHandler.applyEdits(image, edits, false);
 
     // Assert
@@ -86,7 +84,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const result = await imageHandler.applyEdits(image, edits, false);
 
     // Assert
@@ -125,7 +123,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const result = await imageHandler.applyEdits(image, edits, false);
 
     // Assert
@@ -164,7 +162,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const result = await imageHandler.applyEdits(image, edits, false);
 
     // Assert
@@ -196,7 +194,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const result = await imageHandler.applyEdits(image, edits, false);
     const metadata = await result.metadata();
 
@@ -238,7 +236,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const result = await imageHandler.applyEdits(image, edits, false);
 
     // Assert
@@ -263,7 +261,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const metadata = await sharp(
       Buffer.from(
         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
@@ -295,7 +293,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const originalImageMetadata = await sharp(originalImage).metadata();
     const result = await imageHandler.getOverlayImage("bucket", "key", "75", "75", "20", originalImageMetadata);
     const overlayImageMetadata = await sharp(result).metadata();
@@ -320,7 +318,7 @@ describe("overlay", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     const metadata = await sharp(
       Buffer.from(
         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
@@ -350,7 +348,7 @@ describe("calcOverlaySizeOption", () => {
     const imageSize = 100;
     const editSize = "50p";
     const overlaySize = 10;
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
 
     // Act
     const result = imageHandler["calcOverlaySizeOption"](editSize, imageSize, overlaySize);
@@ -364,7 +362,7 @@ describe("calcOverlaySizeOption", () => {
     const imageSize = 100;
     const editSize = "-50p";
     const overlaySize = 50;
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
 
     // Act
     const result = imageHandler["calcOverlaySizeOption"](editSize, imageSize, overlaySize);
@@ -378,7 +376,7 @@ describe("calcOverlaySizeOption", () => {
     const imageSize = 100;
     const editSize = "50";
     const overlaySize = 50;
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
 
     // Act
     const result = imageHandler["calcOverlaySizeOption"](editSize, imageSize, overlaySize);
@@ -392,7 +390,7 @@ describe("calcOverlaySizeOption", () => {
     const imageSize = 100;
     const editSize = "-50";
     const overlaySize = 50;
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
 
     // Act
     const result = imageHandler["calcOverlaySizeOption"](editSize, imageSize, overlaySize);
@@ -406,7 +404,7 @@ describe("calcOverlaySizeOption", () => {
     const imageSize = 100;
     const editSize = undefined;
     const overlaySize = 50;
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
 
     // Act
     const result = imageHandler["calcOverlaySizeOption"](editSize, imageSize, overlaySize);
@@ -453,7 +451,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -488,7 +486,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -523,7 +521,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -558,7 +556,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -593,7 +591,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -629,7 +627,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -664,7 +662,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -699,7 +697,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -734,7 +732,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
@@ -769,7 +767,7 @@ describe("overlay-dimensions", () => {
     }));
 
     // Act
-    const imageHandler = new ImageHandler(s3Client, rekognitionClient);
+    const imageHandler = new ImageHandler(s3Client);
     try {
       await imageHandler.process(request);
     } catch (error) {
