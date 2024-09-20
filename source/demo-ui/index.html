@@ -151,34 +151,6 @@
                 </div>
               </div>
               <hr>
-              <div class="row">
-                <div class="col-sm">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="editor-smart-crop">
-                    <label class="form-check-label" for="editor-smart-crop">Smart Cropping</label>
-                    <a href="#" data-toggle="tooltip" title="" data-placement="top"
-                      data-original-title="Smart cropping uses Amazon Rekognition to detect faces and automatically crop the image to focus on a particular one."
-                      style="font-size:0.8em">[?]</a>
-                  </div>
-                  <div class="form-group">
-                    <label for="editor-smart-crop-index">Focus Index</label>
-                    <a href="#" data-toggle="tooltip" title="" data-placement="top"
-                      data-original-title="(Optional) Use this to toggle between detected faces when smart cropping is enabled. The first face detected always has a Focus Index of 0, with subsequent faces indexed incrementally. Rekognition will automatically return the first face by default."
-                      style="font-size:0.8em">[?]</a>
-                    <input type="number" class="form-control" id="editor-smart-crop-index" placeholder="0">
-                  </div>
-                </div>
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label for="editor-smart-crop-padding">Crop Padding</label>
-                    <a href="#" data-toggle="tooltip" title="" data-placement="top"
-                      data-original-title="(Optional) Use this to apply a quick, uniform padding to the smart-cropped image. Specifying too high of a value will throw an ImageOutOfBounds error, so more particular padding operations should be done directly using the Sharp API."
-                      style="font-size:0.8em">[?]</a>
-                    <input type="number" class="form-control" id="editor-smart-crop-padding" placeholder="0">
-                  </div>
-                </div>
-              </div>
-              <hr>
               <button type="button" class="btn btn-danger" onclick="resetEdits()">Reset</button>
               <button type="button" class="btn btn-success" onclick="getPreviewImage()">Preview</button>
             </form>

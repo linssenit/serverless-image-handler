@@ -36,9 +36,7 @@ function getPreviewImage() {
     const _flatten = $(`#editor-flatten`).first().prop("checked");
     const _normalize = $(`#editor-normalize`).first().prop("checked");
     const _rgb = $(`#editor-rgb`).first().val();
-    const _smartCrop = $(`#editor-smart-crop`).first().prop("checked");
-    const _smartCropIndex = $(`#editor-smart-crop-index`).first().val();
-    const _smartCropPadding = $(`#editor-smart-crop-padding`).first().val();
+
     // Setup the edits object
     const _edits = {}
     _edits.resize = {};
@@ -59,9 +57,6 @@ function getPreviewImage() {
         const arr = input.split(',');
         const rgb = { r: Number(arr[0]), g: Number(arr[1]), b: Number(arr[2]) };
         _edits.tint = rgb
-    }
-    if (_smartCrop) {
-        handleSmartCrop(_edits, _smartCropIndex, _smartCropPadding);
     }
     if (Object.keys(_edits.resize).length === 0) { delete _edits.resize }
     // Gather the bucket and key names
@@ -88,12 +83,6 @@ function getPreviewImage() {
     $(`#preview-request-body`).html(JSON.stringify(request, undefined, 2));
     // Fill the encoded URL field
     $(`#preview-encoded-url`).val(`${appVariables.apiEndpoint}/${enc}`);
-}
-
-function handleSmartCrop(_edits, _smartCropIndex, _smartCropPadding) {
-    _edits.smartCrop = {};
-    if (_smartCropIndex !== "") { _edits.smartCrop.faceIndex = Number(_smartCropIndex); }
-    if (_smartCropPadding !== "") { _edits.smartCrop.padding = Number(_smartCropPadding); }
 }
 
 function handleResize(_width, _edits, _height, _resize) {
